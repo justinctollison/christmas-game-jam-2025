@@ -1,53 +1,40 @@
 using UnityEngine;
 
-/// <summary>
-/// Controls a camera follow target used by Cinemachine.
-/// Handles smooth rotation based on player input.
-/// </summary>
 public class CameraFollowTarget : MonoBehaviour
 {
     #region Settings
-    [Header("Rotation Settings")]
-    [SerializeField] private float _mouseSensitivity = 2f;
-    [SerializeField] private float _verticalClampMin = -30f;
-    [SerializeField] private float _verticalClampMax = 60f;
+    [SerializeField] private float _mouseSensitivity = 120f;
+    [SerializeField] private float _minPitch = -30f;
+    [SerializeField] private float _maxPitch = 65f;
     #endregion
 
-    #region State
     private float _yaw;
     private float _pitch;
-    #endregion
 
     private void Start()
     {
-        Vector3 rotation = transform.eulerAngles;
-        _yaw = rotation.y;
-        _pitch = rotation.x;
+        Vector3 angles = transform.eulerAngles;
+        _yaw = angles.y;
+        _pitch = angles.x;
 
-        // Optional: lock cursor for game feel
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     private void Update()
     {
-        HandleRotation();
+        HandleMouseLook();
     }
 
-    #region Core Logic
-
-    private void HandleRotation()
+    private void HandleMouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity;
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
 
-        _yaw += mouseX;
-        _pitch -= mouseY;
-
-        _pitch = Mathf.Clamp(_pitch, _verticalClampMin, _verticalClampMax);
+        _yaw += mouseX * _mouseSensitivity * Time.deltaTime;
+        _pitch -= mouseY * _mouseSensitivity * Time.deltaTime;
+        _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
 
         transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
     }
-
-    #endregion
 }
