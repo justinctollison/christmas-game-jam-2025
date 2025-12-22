@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TraversalTarget
   _landingPoint: {fileID: 357549955}
-  _overrideFacing: 1
+  _prompt: {fileID: 0}
 --- !u!65 &357549952
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TraversalTarget
   _landingPoint: {fileID: 690159520}
-  _overrideFacing: 1
+  _prompt: {fileID: 0}
 --- !u!65 &690159517
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1189,54 +1189,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4189399684954090688, guid: 8e7c7d0b1647c484c8536191fea6c318, type: 3}
   m_PrefabInstance: {fileID: 1502987475}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1008211701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1008211702}
-  - component: {fileID: 1008211703}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1008211702
+--- !u!4 &1008211702 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1645078355191996942, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+  m_PrefabInstance: {fileID: 8193650443770749734}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008211701}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.68, z: 0.062}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2016863704}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1008211703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008211701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ab22c86b1fdd2948bcf1c4b2691d3ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraFollowTarget
-  _player: {fileID: 1214454005}
-  _mouseSensitivity: 1
-  _minPitch: -30
-  _maxPitch: 65
 --- !u!4 &1028542309 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3510960546001100410, guid: 7920918c5a1fdbf4a923957a655d8768, type: 3}
@@ -1280,7 +1237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TraversalTarget
   _landingPoint: {fileID: 1091290459}
-  _overrideFacing: 1
+  _prompt: {fileID: 0}
 --- !u!65 &1091290456
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3028,38 +2985,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4189399684954090688, guid: 8e7c7d0b1647c484c8536191fea6c318, type: 3}
   m_PrefabInstance: {fileID: 1514075031}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2016863703
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2016863704}
-  m_Layer: 0
-  m_Name: CameraRig
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2016863704
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016863703}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1008211702}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022881894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3328,6 +3253,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d697659114219fe49bb59444ee842f83, type: 3}
+--- !u!1001 &8193650443770749734
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260913497786703743, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501143485251721644, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1214454005}
+    - target: {fileID: 7055084945103612621, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
+      propertyPath: m_Name
+      value: CameraRig
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2a708683c7d0a6948807c0558f393e7e, type: 3}
 --- !u!1001 &8713795190178552529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3402,6 +3388,6 @@ SceneRoots:
   - {fileID: 357549955}
   - {fileID: 690159520}
   - {fileID: 1091290459}
-  - {fileID: 2016863704}
+  - {fileID: 8193650443770749734}
   - {fileID: 1436151827}
   - {fileID: 1946945865}

@@ -14,6 +14,8 @@ public class TraversalDetector : MonoBehaviour
     [SerializeField] private float _angleStep = 5f;
     [SerializeField] private float _verticalDetectionDistance = 2.5f;
 
+    private TraversalTarget _previousTarget;
+
     public TraversalTarget CurrentTarget { get; private set; }
 
     private void Update()
@@ -73,6 +75,17 @@ public class TraversalDetector : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (_previousTarget != CurrentTarget)
+        {
+            if (_previousTarget != null)
+                _previousTarget.HidePrompt();
+
+            if (CurrentTarget != null)
+                CurrentTarget.ShowPrompt();
+
+            _previousTarget = CurrentTarget;
         }
     }
 

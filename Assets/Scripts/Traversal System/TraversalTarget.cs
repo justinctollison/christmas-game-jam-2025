@@ -2,22 +2,21 @@ using UnityEngine;
 
 public class TraversalTarget : MonoBehaviour
 {
-    [Header("Traversal Settings")]
     [SerializeField] private Transform _landingPoint;
-    [SerializeField] private bool _overrideFacing = true;
+    [SerializeField] private TraversalPrompt _prompt;
 
-    public Vector3 LandingPosition =>
-        _landingPoint != null ? _landingPoint.position : transform.position;
+    public Vector3 LandingPosition => _landingPoint.position;
+    public Quaternion LandingRotation => _landingPoint.rotation;
 
-    public Quaternion LandingRotation =>
-        _overrideFacing ? transform.rotation : Quaternion.identity;
-
-    private void OnDrawGizmos()
+    public void ShowPrompt()
     {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(LandingPosition, 0.15f);
+        if (_prompt != null)
+            _prompt.Show();
+    }
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, LandingPosition);
+    public void HidePrompt()
+    {
+        if (_prompt != null)
+            _prompt.Hide();
     }
 }
