@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpHeight = 1.5f;
 
     private CharacterController _characterController;
+    private TraversalController _traversalController;
     private Transform _cameraTransform;
 
     private Vector3 _velocity;
+    private float _verticalVelocity;
     private bool _isGrounded;
     private bool _movementEnabled = true;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _traversalController = GetComponent<TraversalController>();
         _cameraTransform = Camera.main.transform;
     }
 
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
         HandleGroundCheck();
         HandleMovement();
         HandleGravity();
+        HandleJump();
     }
 
     private void HandleGroundCheck()
@@ -81,9 +85,42 @@ public class PlayerController : MonoBehaviour
 
     private void HandleGravity()
     {
-        _velocity.y += _gravity * Time.deltaTime;
+        if (_isGrounded && _verticalVelocity < 0f)
+            _verticalVelocity = -2f;
+
+        _verticalVelocity += _gravity * Time.deltaTime;
+
+        _velocity = Vector3.up * _verticalVelocity;
         _characterController.Move(_velocity * Time.deltaTime);
     }
+
+
+    private void HandleJump()
+    {
+        if (!_movementEnabled)
+            return;
+
+        if (!Input.GetButtonDown("Jump"))
+            return;
+
+        // Give traversal first chance to consume jump
+        if (_traversalController != null &&
+            _traversalController.TryStartTraversal())
+        {
+            // Jump input consumed by traversal
+            _verticalVelocity = 0f;
+            return;
+        }
+
+        // Normal jump
+        if (_isGrounded)
+        {
+            _verticalVelocity = Mathf.Sqrt(
+                _jumpHeight * -2f * _gravity
+            );
+        }
+    }
+
 
     public void SetMovementEnabled(bool enabled)
     {

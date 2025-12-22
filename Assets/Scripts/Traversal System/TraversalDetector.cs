@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class TraversalDetector : MonoBehaviour
 {
-    [Header("Detection")]
-    [SerializeField] private float _forwardDistance = 2.0f;
-    [SerializeField] private float _upwardDistance = 2.5f;
-    [SerializeField] private float _sphereRadius = 0.5f;
-    [SerializeField] private LayerMask _traversalLayer;
+    [Header("General Detection")]
+    [SerializeField] private float _forwardDistance = 2.5f;
+    [SerializeField] private float _sphereRadius = 0.4f;
+    [SerializeField, Range(0f, 1f)] private float _minFacingDot = 0.65f;
+    [SerializeField] private LayerMask _traversalLayerMask;
 
-    [Header("Intent")]
-    [SerializeField] private float _minFacingDot = 0.5f;
+    [Header("Vertical Traversal (Angle Range)")]
+    [SerializeField, Range(0f, -90f)] private float _minUpwardAngle = 35f;
+    [SerializeField, Range(0f, -90f)] private float _maxUpwardAngle = 60f;
+    [SerializeField] private float _angleStep = 5f;
+    [SerializeField] private float _verticalDetectionDistance = 2.5f;
 
-    private TraversalTarget _currentTarget;
-
-    public TraversalTarget CurrentTarget => _currentTarget;
+    public TraversalTarget CurrentTarget { get; private set; }
 
     private void Update()
     {
@@ -22,49 +23,99 @@ public class TraversalDetector : MonoBehaviour
 
     private void DetectTraversalTarget()
     {
-        _currentTarget = null;
+        CurrentTarget = null;
 
-        Vector3 origin = transform.position + Vector3.up * 1.0f;
-        Vector3 forwardDir = transform.forward;
+        Vector3 origin = transform.position + Vector3.up;
 
-        // 1?? Forward probe (horizontal traversal)
-        TryDetect(origin, forwardDir, _forwardDistance);
-
-        if (_currentTarget != null)
-            return;
-
-        // 2?? Angled-up probe (vertical traversal)
-        Vector3 upwardDir = (forwardDir + Vector3.up * 0.75f).normalized;
-        TryDetect(origin, upwardDir, _upwardDistance);
-    }
-
-    private void TryDetect(Vector3 origin, Vector3 direction, float distance)
-    {
-        if (Physics.SphereCast(origin, _sphereRadius, direction, out RaycastHit hit, distance, _traversalLayer))
+        // -------------------------
+        // Horizontal Traversal
+        // -------------------------
+        if (Physics.SphereCast(
+            origin,
+            _sphereRadius,
+            transform.forward,
+            out RaycastHit horizontalHit,
+            _forwardDistance,
+            _traversalLayerMask))
         {
-            TraversalTarget target = hit.collider.GetComponentInParent<TraversalTarget>();
-            if (target == null)
-                return;
+            if (horizontalHit.collider.TryGetComponent(out TraversalTarget target))
+            {
+                if (IsFacingTarget(target))
+                {
+                    CurrentTarget = target;
+                    return;
+                }
+            }
+        }
 
-            Vector3 toTarget = (target.LandingPosition - transform.position).normalized;
-            float facingDot = Vector3.Dot(transform.forward, toTarget);
+        // -------------------------
+        // Vertical Traversal (Angle Cone)
+        // -------------------------
+        for (float angle = _minUpwardAngle; angle <= _maxUpwardAngle; angle += _angleStep)
+        {
+            Vector3 direction =
+                Quaternion.AngleAxis(angle, transform.right) * transform.forward;
 
-            if (facingDot < _minFacingDot)
-                return;
-
-            _currentTarget = target;
+            if (Physics.SphereCast(
+                origin,
+                _sphereRadius,
+                direction,
+                out RaycastHit hit,
+                _verticalDetectionDistance,
+                _traversalLayerMask))
+            {
+                if (hit.collider.TryGetComponent(out TraversalTarget target))
+                {
+                    if (IsFacingTarget(target))
+                    {
+                        CurrentTarget = target;
+                        return;
+                    }
+                }
+            }
         }
     }
 
+    private bool IsFacingTarget(TraversalTarget target)
+    {
+        Vector3 toTarget =
+            (target.LandingPosition - transform.position).normalized;
+
+        float dot = Vector3.Dot(transform.forward, toTarget);
+        return dot >= _minFacingDot;
+    }
+
+    // -------------------------
+    // Debug
+    // -------------------------
     private void OnDrawGizmosSelected()
     {
         Vector3 origin = transform.position + Vector3.up;
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(origin, origin + transform.forward * _forwardDistance);
+        // Horizontal
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(
+            origin + transform.forward * _forwardDistance,
+            _sphereRadius
+        );
 
+        // Vertical cone
         Gizmos.color = Color.cyan;
-        Vector3 upwardDir = (transform.forward + Vector3.up * 0.75f).normalized;
-        Gizmos.DrawLine(origin, origin + upwardDir * _upwardDistance);
+        for (float angle = _minUpwardAngle; angle <= _maxUpwardAngle; angle += _angleStep)
+        {
+            Vector3 dir =
+                Quaternion.AngleAxis(angle, transform.right) * transform.forward;
+            Gizmos.DrawRay(origin, dir * _verticalDetectionDistance);
+        }
+
+        // Active target
+        if (CurrentTarget != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(
+                transform.position,
+                CurrentTarget.LandingPosition
+            );
+        }
     }
 }

@@ -2765,53 +2765,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000000022351742, y: 0.10647905, z: 0.8521825}
     m_Extent: {x: 0.109709896, y: 0.1188937, z: 0.1481305}
   m_DirtyAABB: 0
---- !u!1 &4842555706087890655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4469254199728192036}
-  - component: {fileID: 1970353339039920766}
-  m_Layer: 0
-  m_Name: CameraFollowTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4469254199728192036
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4842555706087890655}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8012992414003227549}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1970353339039920766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4842555706087890655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ab22c86b1fdd2948bcf1c4b2691d3ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraFollowTarget
-  _mouseSensitivity: 120
-  _minPitch: -30
-  _maxPitch: 65
 --- !u!1 &4977751812393695205
 GameObject:
   m_ObjectHideFlags: 0
@@ -4012,7 +3965,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3880503204924619280}
-  - {fileID: 4469254199728192036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &7781276234491580257
@@ -4054,11 +4006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _moveSpeed: 5
   _rotationSpeed: 10
-  _acceleration: 10
-  _gravity: -9.81
-  _jumpHeight: 1.5
-  _groundCheckBuffer: -2
-  _animator: {fileID: 0}
+  _gravity: -15
+  _jumpHeight: 2
 --- !u!114 &1353214655358377782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4072,7 +4021,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TraversalController
   _traversalDuration: 0.25
+  _jumpHeight: 1.2
   _traversalKey: 32
+  _jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.0958252
+      value: 0.7857132
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &336516155895789935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4085,13 +4059,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d4d77160bdb4a4ca0fac009354992a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TraversalDetector
-  _forwardDistance: 5
-  _upwardDistance: 2.5
+  _forwardDistance: 4
   _sphereRadius: 0.5
-  _traversalLayer:
+  _minFacingDot: 0.5
+  _traversalLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  _minFacingDot: 0.5
+  _minUpwardAngle: -90
+  _maxUpwardAngle: -21.3
+  _angleStep: 5
+  _verticalDetectionDistance: 4
 --- !u!1 &8244274940246486301
 GameObject:
   m_ObjectHideFlags: 0

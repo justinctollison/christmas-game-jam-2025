@@ -5,8 +5,12 @@ using UnityEngine;
 public class TraversalController : MonoBehaviour
 {
     [Header("Traversal")]
-    [SerializeField] private float _traversalDuration = 0.25f;
+    [SerializeField] private float _traversalDuration = 0.35f;
+    [SerializeField] private float _jumpHeight = 1.2f;
     [SerializeField] private KeyCode _traversalKey = KeyCode.Space;
+    [SerializeField]
+    private AnimationCurve _jumpCurve =
+        AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private CharacterController _characterController;
     private TraversalDetector _detector;
@@ -21,22 +25,20 @@ public class TraversalController : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
     }
 
-    private void Update()
+    public bool TryStartTraversal()
     {
         if (_isTraversing)
-            return;
+            return true;
 
-        if (_detector.CurrentTarget != null &&
-            Input.GetKeyDown(_traversalKey))
-        {
-            StartCoroutine(PerformTraversal(_detector.CurrentTarget));
-        }
+        if (_detector.CurrentTarget == null)
+            return false;
+
+        StartCoroutine(PerformTraversal(_detector.CurrentTarget));
+        return true;
     }
 
     private IEnumerator PerformTraversal(TraversalTarget target)
     {
-        transform.LookAt(target.transform);
-
         _isTraversing = true;
         _playerController.SetMovementEnabled(false);
 
@@ -44,31 +46,34 @@ public class TraversalController : MonoBehaviour
         Vector3 endPos = target.LandingPosition;
 
         Quaternion startRot = transform.rotation;
-        //Quaternion endRot = target.LandingRotation;
+        Quaternion endRot = target.LandingRotation;
 
         float elapsed = 0f;
+
+        _characterController.enabled = false;
 
         while (elapsed < _traversalDuration)
         {
             float t = elapsed / _traversalDuration;
-            t = Mathf.SmoothStep(0f, 1f, t);
+            float curvedT = _jumpCurve.Evaluate(t);
 
-            Vector3 nextPos = Vector3.Lerp(startPos, endPos, t);
-            _characterController.enabled = false;
-            transform.position = nextPos;
-            _characterController.enabled = true;
+            Vector3 horizontalPos = Vector3.Lerp(startPos, endPos, t);
 
+            // Vertical jump arc
+            float heightOffset = Mathf.Sin(curvedT * Mathf.PI) * _jumpHeight;
+            Vector3 finalPos = horizontalPos + Vector3.up * heightOffset;
+
+            transform.position = finalPos;
             //transform.rotation = Quaternion.Slerp(startRot, endRot, t);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        _characterController.enabled = false;
         transform.position = endPos;
         //transform.rotation = endRot;
-        _characterController.enabled = true;
 
+        _characterController.enabled = true;
         _playerController.SetMovementEnabled(true);
         _isTraversing = false;
     }
