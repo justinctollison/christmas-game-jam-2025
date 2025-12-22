@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 12f;
     [SerializeField] private float _acceleration = 10f;
     [SerializeField] private float _gravity = -25f;
+    private bool _movementEnabled = true;
     #endregion
 
     #region Jump Settings
@@ -16,10 +17,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region References
-    [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private Animator _animator;
     #endregion
 
     private CharacterController _characterController;
+    private Transform _cameraTransform;
     private Vector3 _velocity;
     private Vector3 _currentMoveVelocity;
 
@@ -45,8 +47,16 @@ public class PlayerController : MonoBehaviour
 
     #region Core Logic
 
+
+    public void SetMovementEnabled(bool enabled)
+    {
+        _movementEnabled = enabled;
+    }
+
     private void HandleMovement()
     {
+        if (!_movementEnabled) { return; }
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -91,6 +101,7 @@ public class PlayerController : MonoBehaviour
         );
 
         _characterController.Move(_currentMoveVelocity * Time.deltaTime);
+        // TODO Handle Walking animation
     }
 
     private void HandleGravity()
@@ -111,6 +122,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
+            // TODO Handle Jump animation
         }
     }
 
