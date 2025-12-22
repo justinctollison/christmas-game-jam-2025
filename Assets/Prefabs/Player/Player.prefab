@@ -3989,6 +3989,8 @@ GameObject:
   - component: {fileID: 8012992414003227549}
   - component: {fileID: 7781276234491580257}
   - component: {fileID: 6071287203740779273}
+  - component: {fileID: 1353214655358377782}
+  - component: {fileID: 336516155895789935}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4056,7 +4058,40 @@ MonoBehaviour:
   _gravity: -9.81
   _jumpHeight: 1.5
   _groundCheckBuffer: -2
-  _cameraTransform: {fileID: 0}
+  _animator: {fileID: 0}
+--- !u!114 &1353214655358377782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195661061591430123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808fd40a130879b48aebb8f5c751fe05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TraversalController
+  _traversalDuration: 0.25
+  _traversalKey: 32
+--- !u!114 &336516155895789935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195661061591430123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d4d77160bdb4a4ca0fac009354992a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TraversalDetector
+  _forwardDistance: 5
+  _upwardDistance: 2.5
+  _sphereRadius: 0.5
+  _traversalLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _minFacingDot: 0.5
 --- !u!1 &8244274940246486301
 GameObject:
   m_ObjectHideFlags: 0
