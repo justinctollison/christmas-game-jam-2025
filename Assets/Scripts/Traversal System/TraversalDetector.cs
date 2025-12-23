@@ -76,17 +76,6 @@ public class TraversalDetector : MonoBehaviour
                 }
             }
         }
-
-        if (_previousTarget != CurrentTarget)
-        {
-            if (_previousTarget != null)
-                _previousTarget.HidePrompt();
-
-            if (CurrentTarget != null)
-                CurrentTarget.ShowPrompt();
-
-            _previousTarget = CurrentTarget;
-        }
     }
 
     private bool IsFacingTarget(TraversalTarget target)

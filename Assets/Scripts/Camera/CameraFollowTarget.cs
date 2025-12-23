@@ -13,6 +13,11 @@ public class CameraFollowTarget : MonoBehaviour
     private float _yaw;
     private float _pitch;
 
+    private void Awake()
+    {
+        _player = FindFirstObjectByType<PlayerController>().transform;
+    }
+
     private void Start()
     {
         Vector3 angles = transform.eulerAngles;

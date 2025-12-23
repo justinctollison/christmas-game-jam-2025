@@ -5,18 +5,25 @@ public class TraversalTarget : MonoBehaviour
     [SerializeField] private Transform _landingPoint;
     [SerializeField] private TraversalPrompt _prompt;
 
-    public Vector3 LandingPosition => _landingPoint.position;
-    public Quaternion LandingRotation => _landingPoint.rotation;
+    private TraversalDetector _detector;
 
-    public void ShowPrompt()
+    public Vector3 LandingPosition => transform.position;
+    public Quaternion LandingRotation => transform.rotation;
+
+    private void Awake()
     {
-        if (_prompt != null)
-            _prompt.Show();
+        _detector = FindFirstObjectByType<TraversalDetector>();
+        _prompt = GetComponent<TraversalPrompt>();
     }
 
-    public void HidePrompt()
+    private void Update()
     {
-        if (_prompt != null)
+        if (_detector == null || _prompt == null)
+            return;
+
+        if (_detector.CurrentTarget == this)
+            _prompt.Show();
+        else
             _prompt.Hide();
     }
 }

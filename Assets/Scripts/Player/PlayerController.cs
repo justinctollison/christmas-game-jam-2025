@@ -1,11 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _rotationSpeed = 10f;
+
+    [Tooltip("Angle (deg) where forward speed reaches zero")]
+    [SerializeField] private float _turnSlowdownAngle = 60f;
+
+    [Tooltip("Max angular turn rate at low speed (deg/sec)")]
+    [SerializeField] private float _maxTurnRate = 140f;
+
+    [Tooltip("Min angular turn rate at high speed (deg/sec)")]
+    [SerializeField] private float _minTurnRate = 70f;
+
     [SerializeField] private float _gravity = -20f;
 
     [Header("Jump")]
@@ -13,9 +22,9 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController _characterController;
     private TraversalController _traversalController;
+    private PlayerAnimatorController _animatorController;
     private Transform _cameraTransform;
 
-    private Vector3 _velocity;
     private float _verticalVelocity;
     private bool _isGrounded;
     private bool _movementEnabled = true;
@@ -26,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _traversalController = GetComponent<TraversalController>();
+        _animatorController = GetComponent<PlayerAnimatorController>();
         _cameraTransform = Camera.main.transform;
     }
 
@@ -44,12 +54,15 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = _characterController.isGrounded;
 
-        if (_isGrounded && _velocity.y < 0f)
-        {
-            _velocity.y = -2f;
-        }
+        if (_isGrounded && _verticalVelocity < 0f)
+            _verticalVelocity = -2f;
+
+        _animatorController.SetGrounded(_isGrounded);
     }
 
+    // --------------------------------------------------
+    // ANIMAL LOCOMOTION CORE
+    // --------------------------------------------------
     private void HandleMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -57,30 +70,66 @@ public class PlayerController : MonoBehaviour
 
         Vector3 input = new Vector3(horizontal, 0f, vertical);
 
-        if (input.sqrMagnitude < 0.01f)
+        // No input → idle
+        if (input.sqrMagnitude < 0.001f)
+        {
+            _animatorController.UpdateMovement(Vector3.zero, 0f);
             return;
+        }
 
-        // Camera-relative movement (read-only camera)
-        Vector3 cameraForward = _cameraTransform.forward;
-        Vector3 cameraRight = _cameraTransform.right;
+        // Camera-relative desired direction
+        Vector3 camForward = _cameraTransform.forward;
+        Vector3 camRight = _cameraTransform.right;
 
-        cameraForward.y = 0f;
-        cameraRight.y = 0f;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
 
-        cameraForward.Normalize();
-        cameraRight.Normalize();
+        Vector3 desiredDir =
+            (camForward * input.z + camRight * input.x).normalized;
 
-        Vector3 moveDirection = cameraForward * input.z + cameraRight * input.x;
-
-        _characterController.Move(moveDirection * _moveSpeed * Time.deltaTime);
-
-        // Rotate ONLY based on movement direction
-        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-        transform.rotation = Quaternion.Slerp(
-            transform.rotation,
-            targetRotation,
-            _rotationSpeed * Time.deltaTime
+        // ---------------------------------------------
+        // TURN SEVERITY → SLOWDOWN
+        // ---------------------------------------------
+        float signedAngle = Vector3.SignedAngle(
+            transform.forward,
+            desiredDir,
+            Vector3.up
         );
+
+        float turnMagnitude = Mathf.Abs(signedAngle);
+
+        float slowdown = Mathf.Clamp01(
+            1f - (turnMagnitude / _turnSlowdownAngle)
+        );
+
+        // ---------------------------------------------
+        // TRUE CIRCULAR TURNING (ANGULAR VELOCITY)
+        // ---------------------------------------------
+        float turnRate = Mathf.Lerp(
+            _maxTurnRate,   // sharp turns
+            _minTurnRate,   // wide arcs
+            slowdown
+        );
+
+        float maxStep = turnRate * Time.deltaTime;
+        float turnStep = Mathf.Clamp(signedAngle, -maxStep, maxStep);
+
+        transform.Rotate(0f, turnStep, 0f);
+
+        // ---------------------------------------------
+        // FORWARD MOVEMENT (NO STRAFING)
+        // ---------------------------------------------
+        Vector3 forwardMove =
+            transform.forward * (_moveSpeed * slowdown * Time.deltaTime);
+
+        _characterController.Move(forwardMove);
+
+        // ---------------------------------------------
+        // ANIMATOR (DRIVEN BY SAME DATA)
+        // ---------------------------------------------
+        _animatorController.UpdateMovement(desiredDir, slowdown);
     }
 
     private void HandleGravity()
@@ -90,29 +139,25 @@ public class PlayerController : MonoBehaviour
 
         _verticalVelocity += _gravity * Time.deltaTime;
 
-        _velocity = Vector3.up * _verticalVelocity;
-        _characterController.Move(_velocity * Time.deltaTime);
+        _characterController.Move(
+            Vector3.up * _verticalVelocity * Time.deltaTime
+        );
     }
-
 
     private void HandleJump()
     {
-        if (!_movementEnabled)
-            return;
-
         if (!Input.GetButtonDown("Jump"))
             return;
 
-        // Give traversal first chance to consume jump
+        _animatorController.TriggerJump();
+
         if (_traversalController != null &&
             _traversalController.TryStartTraversal())
         {
-            // Jump input consumed by traversal
             _verticalVelocity = 0f;
             return;
         }
 
-        // Normal jump
         if (_isGrounded)
         {
             _verticalVelocity = Mathf.Sqrt(
@@ -120,7 +165,6 @@ public class PlayerController : MonoBehaviour
             );
         }
     }
-
 
     public void SetMovementEnabled(bool enabled)
     {

@@ -3,12 +3,13 @@ using UnityEngine;
 public class TraversalPrompt : MonoBehaviour
 {
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private Vector3 _offset = new Vector3(0f, 0.3f, 0f);
 
     private Transform _cameraTransform;
 
     private void Awake()
     {
+        _canvas = GetComponentInChildren<Canvas>();
+
         if (_canvas != null)
             _canvas.enabled = false;
 
@@ -22,8 +23,8 @@ public class TraversalPrompt : MonoBehaviour
             return;
 
         // Billboard toward camera
-        transform.rotation = Quaternion.LookRotation(
-            transform.position - _cameraTransform.position
+        _canvas.transform.rotation = Quaternion.LookRotation(
+            _canvas.transform.position - _cameraTransform.position
         );
     }
 
@@ -31,6 +32,7 @@ public class TraversalPrompt : MonoBehaviour
     {
         if (_canvas != null)
             _canvas.enabled = true;
+        Debug.Log($"Showing Canvas for {gameObject.name}");
     }
 
     public void Hide()

@@ -3260,10 +3260,10 @@ Animator:
   m_GameObject: {fileID: 5943771832210746981}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c09f8524a6a9dee4a9fb53005c279541, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1edb0168976298740bb0f4f0d2835cda, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9ce34907ff2d76c458263d36330f8fff, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -3942,6 +3942,7 @@ GameObject:
   - component: {fileID: 8012992414003227549}
   - component: {fileID: 7781276234491580257}
   - component: {fileID: 6071287203740779273}
+  - component: {fileID: 6136163555475596805}
   - component: {fileID: 1353214655358377782}
   - component: {fileID: 336516155895789935}
   m_Layer: 0
@@ -3991,7 +3992,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.58, z: 0}
 --- !u!114 &6071287203740779273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4008,6 +4009,18 @@ MonoBehaviour:
   _rotationSpeed: 10
   _gravity: -15
   _jumpHeight: 2
+--- !u!114 &6136163555475596805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195661061591430123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3a005021bb219479f58694cec58615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimatorController
 --- !u!114 &1353214655358377782
 MonoBehaviour:
   m_ObjectHideFlags: 0
