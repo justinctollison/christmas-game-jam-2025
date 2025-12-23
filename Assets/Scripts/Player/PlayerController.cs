@@ -146,25 +146,57 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
+        if (!_movementEnabled)
+            return;
+
+        if (!_isGrounded)
+            return;
+
         if (!Input.GetButtonDown("Jump"))
             return;
 
-        _animatorController.TriggerJump();
+        // Ask traversal system if a traversal is possible
+        bool willTraverse =
+            _traversalController != null &&
+            _traversalController.HasTraversalTarget();
 
-        if (_traversalController != null &&
-            _traversalController.TryStartTraversal())
+        // Tell animator what kind of jump this is
+        _animatorController.TriggerJump(willTraverse);
+    }
+
+
+    public void BeginTraversal()
+    {
+        if (_traversalController == null)
+            return;
+
+        if (_traversalController.TryStartTraversal())
         {
             _verticalVelocity = 0f;
-            return;
-        }
-
-        if (_isGrounded)
-        {
-            _verticalVelocity = Mathf.Sqrt(
-                _jumpHeight * -2f * _gravity
-            );
+            _isGrounded = false;
         }
     }
+
+
+    public void ApplyJumpForce()
+    {
+        // Traversal jumps do NOT use physics impulse
+        if (_traversalController != null &&
+            _traversalController.HasTraversalTarget())
+            return;
+
+        _verticalVelocity = Mathf.Sqrt(
+            _jumpHeight * -2f * _gravity
+        );
+
+        _isGrounded = false;
+    }
+
+    public void ForceStopVerticalMotion()
+    {
+        _verticalVelocity = 0f;
+    }
+
 
     public void SetMovementEnabled(bool enabled)
     {

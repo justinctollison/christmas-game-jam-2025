@@ -39,6 +39,8 @@ public class TraversalController : MonoBehaviour
 
     private IEnumerator PerformTraversal(TraversalTarget target)
     {
+        _playerController.ForceStopVerticalMotion();
+
         _isTraversing = true;
         _playerController.SetMovementEnabled(false);
 
@@ -77,4 +79,10 @@ public class TraversalController : MonoBehaviour
         _playerController.SetMovementEnabled(true);
         _isTraversing = false;
     }
+
+    public bool HasTraversalTarget()
+    {
+        return !_isTraversing && _detector.CurrentTarget != null;
+    }
+
 }

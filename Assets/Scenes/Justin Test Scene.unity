@@ -623,11 +623,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TraversalPrompt
   _canvas: {fileID: 1309484507}
---- !u!4 &460983967 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3880503204924619280, guid: d697659114219fe49bb59444ee842f83, type: 3}
-  m_PrefabInstance: {fileID: 7126337578052143997}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &471845019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3401,10 +3396,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6136163555475596805, guid: d697659114219fe49bb59444ee842f83, type: 3}
-      propertyPath: _modelRoot
-      value: 
-      objectReference: {fileID: 460983967}
     - target: {fileID: 8012992414003227549, guid: d697659114219fe49bb59444ee842f83, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
