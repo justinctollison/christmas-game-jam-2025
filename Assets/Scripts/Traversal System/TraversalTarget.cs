@@ -14,6 +14,7 @@ public class TraversalTarget : MonoBehaviour
     {
         _detector = FindFirstObjectByType<TraversalDetector>();
         _prompt = GetComponent<TraversalPrompt>();
+        GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void Update()
