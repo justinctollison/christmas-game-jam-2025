@@ -19,11 +19,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float _jumpHeight = 1.5f;
+    [SerializeField] private float _jumpBufferTime = 1f;
 
     private CharacterController _characterController;
     private TraversalController _traversalController;
     private PlayerAnimatorController _animatorController;
     private Transform _cameraTransform;
+
+    private bool _jumpRequested;
+    private float _jumpBufferCounter;
+    private bool _jumpLocked;           // Prevent multiple normal jumps while airborne
+    private bool _jumpHasLeftGround;    // Tracks if we’ve left the ground for normal jump
 
     private float _verticalVelocity;
     private bool _isGrounded;
@@ -45,6 +51,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         HandleGroundCheck();
+
         HandleMovement();
         HandleGravity();
         HandleJump();
@@ -54,10 +61,26 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = _characterController.isGrounded;
 
+        // Reset vertical velocity when grounded
         if (_isGrounded && _verticalVelocity < 0f)
             _verticalVelocity = -2f;
 
         _animatorController.SetGrounded(_isGrounded);
+
+        // Unlock normal jump when landed
+        if (_jumpLocked)
+        {
+            if (!_jumpHasLeftGround && !_isGrounded)
+            {
+                _jumpHasLeftGround = true;
+            }
+
+            if (_jumpHasLeftGround && _isGrounded)
+            {
+                _jumpLocked = false;
+                _jumpHasLeftGround = false;
+            }
+        }
     }
 
     // --------------------------------------------------
@@ -149,19 +172,42 @@ public class PlayerController : MonoBehaviour
         if (!_movementEnabled)
             return;
 
-        if (!_isGrounded)
+        // --- Capture jump input ---
+        if (!_jumpLocked && Input.GetButtonDown("Jump"))
+        {
+            _jumpRequested = true;
+            _jumpBufferCounter = _jumpBufferTime;
+        }
+
+        // --- Decrease buffer timer ---
+        if (_jumpRequested)
+        {
+            _jumpBufferCounter -= Time.deltaTime;
+            if (_jumpBufferCounter <= 0f)
+                _jumpRequested = false;
+        }
+
+        // --- Exit if no jump request or not grounded ---
+        if (!_jumpRequested || !_isGrounded)
             return;
 
-        if (!Input.GetButtonDown("Jump"))
-            return;
-
-        // Ask traversal system if a traversal is possible
+        // --- Check for traversal ---
         bool willTraverse =
             _traversalController != null &&
             _traversalController.HasTraversalTarget();
 
-        // Tell animator what kind of jump this is
+        // --- Trigger jump animation ---
         _animatorController.TriggerJump(willTraverse);
+
+        // --- Normal jump locking logic only ---
+        if (!willTraverse)
+        {
+            _jumpLocked = true;
+            _jumpHasLeftGround = false;
+        }
+
+        // --- Clear jump request ---
+        _jumpRequested = false;
     }
 
 
