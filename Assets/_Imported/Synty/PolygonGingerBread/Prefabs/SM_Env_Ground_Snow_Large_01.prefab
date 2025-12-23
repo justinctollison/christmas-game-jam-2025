@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3423337496956766668}
   - component: {fileID: 1742322158445332073}
   - component: {fileID: 4596221990565442211}
+  - component: {fileID: 7023876326536558807}
   m_Layer: 0
   m_Name: SM_Env_Ground_Snow_Large_01
   m_TagString: Untagged
@@ -90,3 +91,25 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7023876326536558807
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650918120529744758}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5366782134151379301, guid: 5f78132495d64ea4a9a35f847d151c19, type: 3}
