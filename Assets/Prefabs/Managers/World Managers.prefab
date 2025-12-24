@@ -78,3 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressManager
   coinsText: {fileID: 0}
   lightsText: {fileID: 0}
+  peppermintScoreText: {fileID: 0}
+  timeScoreText: {fileID: 0}
+  winPanel: {fileID: 0}

@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
 
         // --- Trigger jump animation ---
         _animatorController.TriggerJump(willTraverse);
+        // AudioManager.Instance.PlaySFX(SFXType.Jump);
 
         // --- Normal jump locking logic only ---
         if (!willTraverse)
