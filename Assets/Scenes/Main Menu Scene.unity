@@ -817,7 +817,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -946,7 +946,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1213,6 +1213,8 @@ MonoBehaviour:
   _bellClip: {fileID: 0}
   _jumpClip: {fileID: 0}
   _traversalClip: {fileID: 0}
+  _mainMenuClip: {fileID: 8300000, guid: 946f06614f79f75448668676f2cef578, type: 3}
+  _backgroundClip: {fileID: 8300000, guid: 2a7430a017381e845ae18ae5772f08db, type: 3}
 --- !u!4 &1580104449
 Transform:
   m_ObjectHideFlags: 0

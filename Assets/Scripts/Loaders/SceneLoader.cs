@@ -17,14 +17,22 @@ public class SceneLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM(BGMType.MainMenu);
+    }
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
+
+        AudioManager.Instance.PlayBGM(BGMType.MainMenu);
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene(1);
+        AudioManager.Instance.PlayBGM(BGMType.Background);
     }
 
     public void QuitGame()

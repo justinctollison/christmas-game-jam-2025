@@ -10,6 +10,12 @@ public enum SFXType
     Door
 }
 
+public enum BGMType
+{
+    MainMenu,
+    Background
+}
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
@@ -24,6 +30,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _bellClip;
     [SerializeField] private AudioClip _jumpClip;
     [SerializeField] private AudioClip _traversalClip;
+
+    [Header("BGM Clips")]
+    [SerializeField] private AudioClip _mainMenuClip;
+    [SerializeField] private AudioClip _backgroundClip;
 
     private void Awake()
     {
@@ -53,8 +63,15 @@ public class AudioManager : MonoBehaviour
             _sfxSource.PlayOneShot(clip);
     }
 
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM(BGMType type)
     {
+        AudioClip clip = type switch
+        {
+            BGMType.Background => _backgroundClip,
+            BGMType.MainMenu => _mainMenuClip,
+            _ => null
+        };
+
         _bgmSource.clip = clip;
         _bgmSource.loop = true;
         _bgmSource.Play();
