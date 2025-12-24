@@ -1,5 +1,11 @@
+using UnityEngine;
+
 public interface IInteractable
 {
+    Transform InteractionPoint { get; }
+
     void Interact(PlayerInteractor interactor);
-    bool CanInteract { get; }
+
+    void ShowPrompt();
+    void HidePrompt();
 }

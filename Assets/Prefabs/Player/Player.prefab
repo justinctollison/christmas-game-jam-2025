@@ -3923,6 +3923,7 @@ GameObject:
   - component: {fileID: 5673747817668068426}
   - component: {fileID: 6071287203740779273}
   - component: {fileID: 6136163555475596805}
+  - component: {fileID: 5778065119728079801}
   - component: {fileID: 1353214655358377782}
   - component: {fileID: 336516155895789935}
   m_Layer: 0
@@ -4028,6 +4029,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimatorController
   _modelRoot: {fileID: 3880503204924619280}
   turnLayerIndex: 1
+--- !u!114 &5778065119728079801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195661061591430123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113d64c331a04404ea14e058e8fd9c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+  _interactRange: 1.5
+  _interactableMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &1353214655358377782
 MonoBehaviour:
   m_ObjectHideFlags: 0
