@@ -494,10 +494,10 @@ RectTransform:
   - {fileID: 1577704582}
   m_Father: {fileID: 1129611823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 379, y: 0}
-  m_SizeDelta: {x: -1047.1113, y: 0}
+  m_AnchorMin: {x: 0.71000004, y: 0.11100001}
+  m_AnchorMax: {x: 0.8897813, y: 0.8542223}
+  m_AnchoredPosition: {x: -5, y: 12.5}
+  m_SizeDelta: {x: 2.8886719, y: 185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &535628591
 MonoBehaviour:
@@ -817,7 +817,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -946,7 +946,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 0.025
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1208,11 +1208,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   _sfxSource: {fileID: 1229784791}
   _bgmSource: {fileID: 1462976814}
-  _coinClip: {fileID: 0}
-  _lightClip: {fileID: 0}
-  _bellClip: {fileID: 0}
-  _jumpClip: {fileID: 0}
-  _traversalClip: {fileID: 0}
+  _coinClip: {fileID: 8300000, guid: 3254d5fc74e0a794d96f480082bdbf6a, type: 3}
+  _lightClip: {fileID: 8300000, guid: 43e69d6c2aa9a0545bd3dc5980e231f5, type: 3}
+  _bellClip: {fileID: 8300000, guid: 72c0e210d6712fa4f89faa6f96988569, type: 3}
+  _jumpClip: {fileID: 8300000, guid: ca2a9d97acec7544689f3848ea23b2ee, type: 3}
+  _footstepClip: {fileID: 8300000, guid: 2efc5e4bb7b00ae4cbf739f7a1a4c3ff, type: 3}
   _mainMenuClip: {fileID: 8300000, guid: 946f06614f79f75448668676f2cef578, type: 3}
   _backgroundClip: {fileID: 8300000, guid: 2a7430a017381e845ae18ae5772f08db, type: 3}
 --- !u!4 &1580104449

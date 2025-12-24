@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 4236645894697374107}
   - component: {fileID: 8644072520164890174}
   - component: {fileID: 5746269330048932071}
+  - component: {fileID: 7757445320452250067}
   m_Layer: 0
   m_Name: Bell
   m_TagString: Untagged
@@ -129,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2439045973910254600}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000016660005, y: 7.4476023e-16, z: 0.000000044703484, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.04, y: 3.8, z: 12.12}
   m_LocalScale: {x: 25, y: 25, z: 25}
   m_ConstrainProportionsScale: 1
@@ -216,6 +217,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 2c51d79618e46cf4689e43cdedeceb2c, type: 3}
+--- !u!114 &7757445320452250067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439045973910254600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b787386fcf4756a4a9ea6aa74f6609da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bell
+  _interactionPoint: {fileID: 6333425555527810055}
+  _canvas: {fileID: 6297209575486438971}
 --- !u!1 &4653086167739815554
 GameObject:
   m_ObjectHideFlags: 0
