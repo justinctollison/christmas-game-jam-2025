@@ -46,7 +46,7 @@ public class Coin : MonoBehaviour
             return;
 
         GameProgressManager.Instance.AddCoin();
-        AudioManager.Instance.PlaySFX(SFXType.Coin);
+        // AudioManager.Instance.PlaySFX(SFXType.Coin);
 
         Destroy(gameObject);
     }

@@ -24,7 +24,7 @@ public class LightSwitch : InteractableBase
         _lightShaft.enabled = true;
 
         GameProgressManager.Instance.RegisterLightOn();
-        AudioManager.Instance.PlaySFX(SFXType.LightSwitch);
+        // AudioManager.Instance.PlaySFX(SFXType.LightSwitch);
         HidePrompt();
     }
 }
