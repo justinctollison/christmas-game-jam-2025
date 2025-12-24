@@ -962,11 +962,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   _sfxSource: {fileID: 540738393}
   _bgmSource: {fileID: 2096003339}
-  _coinClip: {fileID: 0}
-  _lightClip: {fileID: 0}
+  _coinClip: {fileID: 8300000, guid: 3254d5fc74e0a794d96f480082bdbf6a, type: 3}
+  _lightClip: {fileID: 8300000, guid: 43e69d6c2aa9a0545bd3dc5980e231f5, type: 3}
   _bellClip: {fileID: 0}
   _jumpClip: {fileID: 0}
-  _traversalClip: {fileID: 0}
   _footstepClip: {fileID: 8300000, guid: 2efc5e4bb7b00ae4cbf739f7a1a4c3ff, type: 3}
   _mainMenuClip: {fileID: 8300000, guid: 946f06614f79f75448668676f2cef578, type: 3}
   _backgroundClip: {fileID: 8300000, guid: 2a7430a017381e845ae18ae5772f08db, type: 3}
