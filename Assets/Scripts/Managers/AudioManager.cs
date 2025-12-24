@@ -7,7 +7,8 @@ public enum SFXType
     Bell,
     Jump,
     Traversal,
-    Door
+    Door,
+    Footstep
 }
 
 public enum BGMType
@@ -30,6 +31,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _bellClip;
     [SerializeField] private AudioClip _jumpClip;
     [SerializeField] private AudioClip _traversalClip;
+    [SerializeField] private AudioClip _footstepClip;
 
     [Header("BGM Clips")]
     [SerializeField] private AudioClip _mainMenuClip;
@@ -56,6 +58,7 @@ public class AudioManager : MonoBehaviour
             SFXType.Bell => _bellClip,
             SFXType.Jump => _jumpClip,
             SFXType.Traversal => _traversalClip,
+            SFXType.Footstep => _footstepClip,
             _ => null
         };
 
