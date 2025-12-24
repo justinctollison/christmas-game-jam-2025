@@ -6,21 +6,9 @@ public class TriggerTeleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
-            return;
-
-        CharacterController controller = other.GetComponent<CharacterController>();
-
-        if (controller != null)
+        if (other.GetComponent<PlayerController>())
         {
-            controller.enabled = false;
-            other.transform.position = _platformTeleport.position;
-            controller.enabled = true;
+            other.gameObject.transform.position = _platformTeleport.transform.position;
         }
-
-        PlayerController player = other.GetComponent<PlayerController>();
-        player?.ResetVerticalVelocity();
-
-        Debug.Log("We triggered a death zone.");
     }
 }
