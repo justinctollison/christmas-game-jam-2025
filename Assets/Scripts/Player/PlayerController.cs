@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpHeight = 1.5f;
     [SerializeField] private float _jumpBufferTime = 1f;
 
+    [SerializeField] private Transform _playerStartLocation;
+
     private CharacterController _characterController;
     private TraversalController _traversalController;
     private PlayerAnimatorController _animatorController;
@@ -43,6 +45,11 @@ public class PlayerController : MonoBehaviour
         _traversalController = GetComponent<TraversalController>();
         _animatorController = GetComponent<PlayerAnimatorController>();
         _cameraTransform = Camera.main.transform;
+    }
+
+    private void Start()
+    {
+        //transform.position = _playerStartLocation.position;
     }
 
     private void Update()
@@ -198,7 +205,7 @@ public class PlayerController : MonoBehaviour
 
         // --- Trigger jump animation ---
         _animatorController.TriggerJump(willTraverse);
-        // AudioManager.Instance.PlaySFX(SFXType.Jump);
+         AudioManager.Instance.PlaySFX(SFXType.Jump);
 
         // --- Normal jump locking logic only ---
         if (!willTraverse)
@@ -244,9 +251,14 @@ public class PlayerController : MonoBehaviour
         _verticalVelocity = 0f;
     }
 
-
     public void SetMovementEnabled(bool enabled)
     {
         _movementEnabled = enabled;
     }
+
+    public void ResetVerticalVelocity()
+    {
+        _verticalVelocity = 0f;
+    }
+
 }
