@@ -14,6 +14,7 @@ public class EndDoor : MonoBehaviour
         if (_animator != null)
             _animator.SetTrigger("Open");
 
+        AudioManager.Instance.PlaySFX(SFXType.Door);
         Destroy(gameObject);
     }
 

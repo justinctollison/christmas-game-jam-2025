@@ -67,6 +67,7 @@ public class GameProgressManager : MonoBehaviour
     public void CompleteGame()
     {
         Debug.Log("Game Complete!");
+        AudioManager.Instance.PlaySFX(SFXType.Bell);
         // Jam finish screen / fade / bell sound
     }
 }
