@@ -84,8 +84,6 @@ public class GameProgressManager : MonoBehaviour
 
     public void CompleteGame()
     {
-        StartCoroutine(EndGameRoutine());
-
         winPanel.gameObject.SetActive(true);
 
         _gameCompleted = true;
@@ -94,6 +92,7 @@ public class GameProgressManager : MonoBehaviour
         peppermintScoreText.text = $"{CoinsCollected}/{TotalCoins}";
         timeScoreText.text = GetFormattedTime();
 
+        EndGameScreen();
         Debug.Log("Game Complete!");
         // AudioManager.Instance.PlaySFX(SFXType.Bell);
         // Jam finish screen / fade / bell soun
@@ -114,13 +113,14 @@ public class GameProgressManager : MonoBehaviour
         return $"{minutes:00}:{seconds:00}";
     }
 
-    private IEnumerator EndGameRoutine()
+    private void EndGameScreen()
     {
-        yield return new WaitForSeconds(4f);
-
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
+    }
 
+    public void ReturnToMainMenu()
+    {
         SceneLoader.Instance.LoadMainMenu();
     }
 }
