@@ -13,7 +13,9 @@ public enum SFXType
 public enum BGMType
 {
     MainMenu,
-    Background
+    Background,
+    Credits,
+    Winning
 }
 
 public class AudioManager : MonoBehaviour
@@ -30,10 +32,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _bellClip;
     [SerializeField] private AudioClip _jumpClip;
     [SerializeField] private AudioClip _footstepClip;
+    [SerializeField] private AudioClip _doorClip;
 
     [Header("BGM Clips")]
     [SerializeField] private AudioClip _mainMenuClip;
     [SerializeField] private AudioClip _backgroundClip;
+    [SerializeField] private AudioClip _creditsClip;
+    [SerializeField] private AudioClip _winningClip;
 
     private void Awake()
     {
@@ -56,6 +61,7 @@ public class AudioManager : MonoBehaviour
             SFXType.Bell => _bellClip,
             SFXType.Jump => _jumpClip,
             SFXType.Footstep => _footstepClip,
+            SFXType.Door => _doorClip,
             _ => null
         };
 
@@ -69,6 +75,8 @@ public class AudioManager : MonoBehaviour
         {
             BGMType.Background => _backgroundClip,
             BGMType.MainMenu => _mainMenuClip,
+            BGMType.Credits => _creditsClip,
+            BGMType.Winning => _winningClip,
             _ => null
         };
 

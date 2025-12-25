@@ -94,7 +94,7 @@ public class GameProgressManager : MonoBehaviour
 
         EndGameScreen();
         Debug.Log("Game Complete!");
-        // AudioManager.Instance.PlaySFX(SFXType.Bell);
+        AudioManager.Instance.PlaySFX(SFXType.Bell);
         // Jam finish screen / fade / bell soun
     }
 
@@ -117,10 +117,13 @@ public class GameProgressManager : MonoBehaviour
     {
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
+
+        AudioManager.Instance.PlayBGM(BGMType.Winning);
     }
 
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 1f;
         SceneLoader.Instance.LoadMainMenu();
     }
 }

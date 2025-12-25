@@ -19,7 +19,7 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayBGM(BGMType.MainMenu);
+        //AudioManager.Instance.PlayBGM(BGMType.MainMenu);
     }
 
     public void LoadMainMenu()
@@ -29,9 +29,15 @@ public class SceneLoader : MonoBehaviour
         AudioManager.Instance.PlayBGM(BGMType.MainMenu);
     }
 
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void LoadGame()
     {
         SceneManager.LoadScene(1);
+
         AudioManager.Instance.PlayBGM(BGMType.Background);
     }
 
